@@ -72,7 +72,7 @@ fn ipinfo_cache() -> &'static mut HashMap<String, IpDetails> {
 }
 ```
 
-**Recommendation**: Replace with `once_cell::sync::Lazy<RwLock<HashMap<...>>>` or `tokio::sync::RwLock`. Remove all `unsafe` blocks.
+**Recommendation**: Replace with `once_cell::sync::Lazy<tokio::sync::RwLock<HashMap<...>>>` or `tokio::sync::OnceCell<RwLock<...>>`. Remove all `unsafe` blocks. Do NOT use `std::sync::OnceLock` with mutable access as it recreates the same unsafety.
 
 ---
 

@@ -19,7 +19,7 @@ This document lists specific areas of the ckb-discovery codebase that require fu
 ### TODO-002: Fix Unsafe Mutable Static Data Race
 - [ ] **`marci/src/main.rs:120-128`** — `ipinfo_cache()` uses `static mut` + `unsafe` — data race in async context.
 - [ ] **`marci/src/main.rs:130-152`** — `ipinfo()` uses `static mut` + `unsafe` — data race in async context.
-- [ ] **Action**: Replace with `tokio::sync::RwLock<HashMap<...>>` wrapped in `once_cell::sync::Lazy` or `std::sync::OnceLock<RwLock<...>>`.
+- [ ] **Action**: Replace with `tokio::sync::RwLock<HashMap<...>>` wrapped in `once_cell::sync::Lazy` or `tokio::sync::OnceCell<RwLock<...>>`. Do NOT use `std::sync::OnceLock` with mutable access as it recreates the same unsafe pattern.
 - [ ] **Testing**: Add concurrent access test to verify thread safety.
 
 ### TODO-003: Fix All `.unwrap()` on Untrusted Network Data
